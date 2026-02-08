@@ -1,0 +1,30 @@
+<article class="preview" #previewEl
+    role="tooltip"
+    [attr.aria-hidden]="!visible"
+    [class.visible]="visible && movie"
+    [ngStyle]="{ left: x + 'px', top: y + 'px' }">
+    <div class="preview__top">
+        <figure class="preview__figure image-box preview-image">
+            <img class="preview__image" *ngIf="movie?.image; else placeholder" [src]="movie?.image" alt="{{ movie?.name }}">
+        </figure>
+
+        <div class="preview__info">
+            <h3 class="preview__name">{{ movie?.name }}</h3>
+            <p class="preview__year">{{ movie?.year }}</p>
+            <div class="preview__ganres">
+                <span class="preview__ganre" *ngFor="let g of movie?.ganre">
+                    {{g}}
+                </span>
+            </div>
+            <span class="preview__rating"
+                [ngClass]="movie?.rating | ratingColor">
+                {{ movie?.rating }}
+            </span>
+        </div>
+    </div>
+    <p class="preview__desc">{{ movie?.description }}</p>
+</article>
+
+<ng-template #placeholder>
+    <div class="skeleton"></div>
+</ng-template> 

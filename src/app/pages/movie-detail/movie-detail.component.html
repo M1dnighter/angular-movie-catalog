@@ -1,0 +1,36 @@
+<article *ngIf="movie; else loadingTpl" class="movie-detail">
+
+    <a routerLink="/" class="movie-detail__back">На главную</a>
+    
+    <header class="movie-detail__header">
+        <figure class="movie-detail__poster image-box">
+            <img class="movie-detail__image" *ngIf="movie.image; else placeholder" [src]="movie.image" alt="{{movie.name}}">
+        </figure>
+        <div class="movie-detail__info">
+            <h1 class="movie-detail__name">{{movie.name}}</h1>
+            <p class="movie-detail__rating"
+                [ngClass]="movie.rating | ratingColor">
+                {{movie.rating}}
+            </p>
+            <p class="movie-detail__year">{{movie.year}}</p>
+            <div class="movie-detail__ganres">
+                <span class="movie-detail__ganre" *ngFor="let g of movie.ganre">
+                    {{ g }}
+                </span>
+            </div>
+            <section class="movie-detail__desc">
+                <h2 class="movie-detail__sub">Описание</h2>
+                <p>{{ movie.description }}</p>
+            </section>
+        </div>
+
+    </header>
+</article>
+
+<ng-template #loadingTpl>
+    <p class="movie-detail__loading">Загрузка фильма...</p>
+</ng-template>
+
+<ng-template #placeholder>
+    <div class="skeleton"></div>
+</ng-template>

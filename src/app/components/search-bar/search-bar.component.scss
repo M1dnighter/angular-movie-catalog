@@ -1,0 +1,16 @@
+.search-form {
+  display: flex;
+  justify-content: right;
+
+  &__input {
+    margin: 0 auto 20px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    max-width: 300px;
+    font-size: 1rem;
+    background-color:#e0dfdf;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+  }
+}
