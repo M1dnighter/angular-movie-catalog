@@ -24,7 +24,6 @@ Angular application for browsing a movie catalog with hover preview and a detail
 - Angular (standalone components)
 - TypeScript
 - SCSS (BEM methodology)
-- RxJS
 - JSON Server (or similar REST API)
 - HTML5 semantic markup
 
