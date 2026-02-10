@@ -1,36 +1,38 @@
-<article *ngIf="movie; else loadingTpl" class="movie-detail">
+@if (movie(); as m) {
+    <article class="movie-detail">
 
-    <a routerLink="/" class="movie-detail__back">На главную</a>
-    
-    <header class="movie-detail__header">
-        <figure class="movie-detail__poster image-box">
-            <img class="movie-detail__image" *ngIf="movie.image; else placeholder" [src]="movie.image" alt="{{movie.name}}">
-        </figure>
-        <div class="movie-detail__info">
-            <h1 class="movie-detail__name">{{movie.name}}</h1>
-            <p class="movie-detail__rating"
-                [ngClass]="movie.rating | ratingColor">
-                {{movie.rating}}
-            </p>
-            <p class="movie-detail__year">{{movie.year}}</p>
-            <div class="movie-detail__ganres">
-                <span class="movie-detail__ganre" *ngFor="let g of movie.ganre">
-                    {{ g }}
-                </span>
+        <a routerLink="/" class="movie-detail__back">На главную</a>
+        
+        <header class="movie-detail__header">
+            <figure class="movie-detail__poster image-box">
+                @if (m.image) {
+                    <img class="movie-detail__image" [src]="m.image" [alt]="m.name">
+                } @else {
+                    <div class="skeleton"></div>
+                }
+            </figure>
+            <div class="movie-detail__info">
+                <h1 class="movie-detail__name">{{m.name}}</h1>
+                <p class="movie-detail__rating"
+                    [ngClass]="m.rating | ratingColor">
+                    {{m.rating}}
+                </p>
+                <p class="movie-detail__year">{{m.year}}</p>
+                <div class="movie-detail__ganres">
+                    @for (g of m.ganre; track g) {
+                        <span class="movie-detail__ganre">
+                            {{ g }}
+                        </span>
+                    }
+                </div>
+                <section class="movie-detail__desc">
+                    <h2 class="movie-detail__sub">Описание</h2>
+                    <p>{{ m.description }}</p>
+                </section>
             </div>
-            <section class="movie-detail__desc">
-                <h2 class="movie-detail__sub">Описание</h2>
-                <p>{{ movie.description }}</p>
-            </section>
-        </div>
 
-    </header>
-</article>
-
-<ng-template #loadingTpl>
+        </header>
+    </article>
+} @else {
     <p class="movie-detail__loading">Загрузка фильма...</p>
-</ng-template>
-
-<ng-template #placeholder>
-    <div class="skeleton"></div>
-</ng-template>
+}

@@ -1,9 +1,9 @@
 .search-form {
   display: flex;
-  justify-content: right;
+  justify-content:center;
 
   &__input {
-    margin: 0 auto 20px;
+    margin-bottom: 20px;
     padding: 0.5rem 1rem;
     width: 100%;
     max-width: 300px;
@@ -11,6 +11,9 @@
     background-color:#e0dfdf;
     border-radius: 10px;
     border: none;
-    outline: none;
+
+    &:focus {
+      outline: 2px solid #34495e;
+    }
   }
 }

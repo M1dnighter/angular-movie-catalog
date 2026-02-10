@@ -8,17 +8,8 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   padding: 12px;
 
-  opacity: 0;
   pointer-events: none;
-  transform: translateY(10px) scale(0.95);
-  transition: opacity 0.2s ease, transform 0.2s ease;
   z-index: 10;
-
-  &.visible {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-    pointer-events: auto;
-  }
 
   &__top {
     display: flex;

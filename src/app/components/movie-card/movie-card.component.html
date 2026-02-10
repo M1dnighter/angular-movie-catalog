@@ -2,16 +2,16 @@
   (mousemove)="onMouseMove($event)"
   (mouseleave)="onMouseLeave()">
 
-  <a class="movie-card__link" [routerLink]="['/movie', getSlug(movie.name)]">
+  <a class="movie-card__link" [routerLink]="['/movie', movieToSlug(movie())]">
 
     <figure class="movie-card__figure image-box card-image">
-      <img class="movie-card__image" *ngIf="movie.image; else placeholder" [src]="movie.image" [alt]="movie.name">
+      @if (movie().image) {
+        <img class="movie-card__image" [src]="movie().image" [alt]="movie().name">
+      } @else {
+        <div class="skeleton"></div>
+      }
     </figure>
-    <h2 class="movie-card__name">{{ movie.name }}</h2>
-    <p class="movie-card__year">{{ movie.year }}</p>
+    <h2 class="movie-card__name">{{ movie().name }}</h2>
+    <p class="movie-card__year">{{ movie().year }}</p>
   </a>
 </article>
-
-<ng-template #placeholder>
-  <div class="skeleton"></div>
-</ng-template>

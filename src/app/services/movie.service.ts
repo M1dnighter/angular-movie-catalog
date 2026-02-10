@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { movieToSlug } from '../shared/slug.util';
 
 export interface IMovie {
   "id": number;
@@ -18,23 +19,29 @@ export interface IMovie {
 export class MovieService {
   private apiUrl = 'http://localhost:3000/movies';
 
+  readonly movies = signal<IMovie[]>([]);
+  readonly load = signal(false);
+  readonly error = signal<string | null>(null);
+
   constructor(private http: HttpClient) { }
 
-  getMovie(): Observable<IMovie[]> {
-    return this.http.get<IMovie[]>(this.apiUrl).pipe(
-      catchError(err => {
-        console.error('Ошибка при загрузке фильмов', err);
-        return throwError(() => new Error('Ошибка при загрузке фильмов'));
-      })
-    );
+  loadMovies() {
+    this.load.set(true);
+    this.error.set(null);
+
+    this.http.get<IMovie[]>(this.apiUrl).subscribe({
+      next: (data) => {
+        this.movies.set(data);
+        this.load.set(false);
+      },
+      error: (err) => {
+        this.error.set(err.message);
+        this.load.set(false);
+      }
+    });
   }
 
-  getMovieById(id: number): Observable<IMovie>{
-    return this.http.get<IMovie>(`${this.apiUrl}/${id}`).pipe(
-      catchError(err => {
-        console.error('Ошибка при загрузке фильма', err);
-        return throwError(() => new Error('Ошибка при загрузке фильма'));
-      })
-    );
+  getMovieBySlug(slug: string): IMovie | undefined {
+    return this.movies().find(m => movieToSlug(m) === slug);
   }
 }

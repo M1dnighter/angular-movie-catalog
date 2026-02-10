@@ -2,7 +2,7 @@
     <input class="search-form__input" 
         type="search" 
         placeholder="Поиск фильмов..." 
-        [(ngModel)]="value" 
-        name="search"
-        (ngModelChange)="onInputChange()">
+        [ngModel]="value()"
+        (ngModelChange)="value.set($event); searchChange.emit($event)"
+        name="search">
 </form>
